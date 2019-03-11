@@ -11,7 +11,7 @@ apk="app-release.apk"
 
 # build
 cd android
-echo yes | ./gradlew assembleRelease
+./gradlew assembleRelease
 
 # move
 mv android/app/build/outputs/apk/release/$apk $TRAVIS_BUILD_DIR/$product
