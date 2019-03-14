@@ -12,6 +12,8 @@ android:
     - android-27
 licenses:
   - '.+'
+before_install:
+  - echo yes | sdkmanager "platforms;android-27"
 install:
   - nvm install 8.14.1
   - npm install
