@@ -10,14 +10,13 @@ android:
     - platform-tools
     - build-tools-27.0.3
     - android-27
-licenses:
-  - '.+'
 before_install:
-  - echo yes | sdkmanager "platforms;android-23"
-  - echo yes | sdkmanager "platforms;android-27"
+  - echo > $HOME/.android/repositories.cfg
+  - yes | sdkmanager --licenses
 install:
   - nvm install 8.14.1
   - npm install
 script:
   - cd android/
   - ./gradlew assembleRelease
+  - ls -laht
