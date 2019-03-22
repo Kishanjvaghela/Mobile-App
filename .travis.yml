@@ -12,7 +12,7 @@ android:
     - android-27
 before_install:
   - echo > $HOME/.android/repositories.cfg
-  - yes | sdkmanager --licenses
+  - yes | sdkmanager --licenses  --verbose
 install:
   - nvm install 8.14.1
   - npm install
