@@ -75,7 +75,6 @@
             "platform": "ios",
             "sourceMaps": true,
             "outDir": "${workspaceRoot}/.vscode/.react",
-            "preLaunchTask": "select-config-rb"
         },
         {
             "name": "RN: Attach to packager",

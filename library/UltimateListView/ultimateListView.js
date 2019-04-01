@@ -152,11 +152,12 @@ static propTypes = {
 
   constructor(props) {
     super(props)
-    console.log("constructor ----------");
+    console.log("[UltimateListView] constructor ----------");
     this.setPage(1)
     this.setRows([])
 
     this.state = {
+      //@dataSource
       dataSource: [],
       isRefreshing: false,
       paginationStatus: PaginationStatus.firstLoad
@@ -182,6 +183,7 @@ static propTypes = {
   upgradePrice = (index, price) => {
     const hotels = this.state.dataSource.slice(0);
     hotels[index].price = price;//this.hotelInfoById[id].price;
+    //@dataSource
     this.setState({ dataSource: hotels });
   }
 
@@ -197,11 +199,12 @@ static propTypes = {
       }
     }
     this.setRows(refineHotels);
+    //@dataSource
     this.setState({ dataSource: this.rows });
   }
 
   onFirstLoad = (rows, isLoadPrice) => {
-    console.log("onFirstLoad", rows);
+    console.log("[UltimateListView] onFirstLoad", rows);
     
     // this.setState(prevState => ({
     //   dataSource: [...prevState.dataSource, row],
@@ -227,6 +230,7 @@ static propTypes = {
       this.setState( 
         { 
           paginationStatus: PaginationStatus.waiting, 
+          //@dataSource
           dataSource: this.getRows(),
         } 
       );
@@ -235,6 +239,7 @@ static propTypes = {
       this.setState( 
         { 
           paginationStatus: PaginationStatus.allLoaded, 
+          //@dataSource
           dataSource: this.getRows(),
         } 
       );
@@ -243,15 +248,16 @@ static propTypes = {
   }
 
   onDone = () => {
-    console.log("onDone");
+    console.log("[UltimateListView] onDone");
     this.setState({
+      //@dataSource
       dataSource: this.getRows().slice(),
       paginationStatus: PaginationStatus.allLoaded
     })
   }
 
   onRefresh = () => {
-    console.log('onRefresh()')
+    console.log('[UltimateListView] onRefresh()')
     if (this.mounted) {
       this.setState({
         isRefreshing: true
@@ -263,14 +269,14 @@ static propTypes = {
 
   onPaginate = () => {
     if (this.state.paginationStatus !== PaginationStatus.allLoaded && !this.state.isRefreshing) {
-      console.log('onPaginate()')
+      console.log('[UltimateListView] onPaginate()')
       this.setState({ paginationStatus: PaginationStatus.waiting })
       this.props.onFetch(this.getPage() + 1, this.postPaginate, this.endFetch)
     }
   }
 
   onEndReached = () => {
-    console.log('onEndReached()');
+    console.log('[UltimateListView] onEndReached()');
     if (this.props.pagination && this.props.autoPagination && this.state.paginationStatus === PaginationStatus.waiting) {
       this.onPaginate()
     }
@@ -311,7 +317,7 @@ static propTypes = {
   }
 
   postRefresh = (rows = [], pageLimit) => {
-    console.log('postRefresh()');
+    console.log('[UltimateListView] postRefresh()');
     if (this.mounted) {
       let refineHotels = [];
       if (this.props.isDoneSocket)  {
@@ -334,7 +340,7 @@ static propTypes = {
   }
 
   endFetch = () => {
-    console.log('endRefresh()');
+    console.log('[UltimateListView] endRefresh()');
     if (this.mounted) {
       this.setState({ isRefreshing: false })
       if (this.props.refreshableMode === 'advanced' && this._flatList._listRef._scrollRef.onRefreshEnd) {
@@ -344,9 +350,9 @@ static propTypes = {
   }
 
   postPaginate = (rows = [], pageLimit, isLoadPrice) => {
-    console.log("postPaginate", rows)
-    console.log("postPaginate before", this.getRows())
-    console.log("postPaginate this. ", this.props.isDoneSocket)
+    console.log("[UltimateListView] postPaginate", rows)
+    console.log(`[UltimateListView] rows: ${this.getRows()} isDoneSocket: ${this.props.isDoneSocket}`)
+    // console.log("[UltimateListView] postPaginate this. ", this.props.isDoneSocket)
     this.setPage(this.getPage() + 1)
 
     let refineHotels = [];
@@ -363,7 +369,7 @@ static propTypes = {
     else {
       refineHotels = rows;
     }
-    console.log("postPaginate rows", refineHotels);
+    console.log("[UltimateListView] postPaginate rows", refineHotels);
     let mergedRows
     let paginationStatus
     if (rows.length === 0) {
@@ -377,23 +383,25 @@ static propTypes = {
       mergedRows = this.getRows().concat(refineHotels)
       paginationStatus = PaginationStatus.waiting
     }
-    console.log("postPaginate after", this.getRows())
+    console.log("[UltimateListView] postPaginate after", this.getRows())
 
-    console.log("postPaginate", mergedRows)
+    console.log("[UltimateListView] postPaginate", mergedRows)
     this.updateRows(mergedRows, paginationStatus)
   }
 
   updateRows = (rows, paginationStatus) => {
-    console.log("updateRows", rows)
+    console.log("[UltimateListView] updateRows", rows)
     if (rows) {
       this.setRows(rows)
       this.setState({
+        //@dataSource
         dataSource: rows,
         isRefreshing: false,
         paginationStatus
       })
     } else {
       this.setState({
+        //@dataSource
         dataSource: this.getRows().slice(),
         isRefreshing: false,
         paginationStatus
@@ -408,6 +416,7 @@ static propTypes = {
   updateDataSource(rows = []) {
     this.setRows(rows)
     this.setState({
+      //@dataSource
       dataSource: rows
     })
   }
