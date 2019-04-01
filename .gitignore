@@ -71,3 +71,4 @@ yarn-error.log*
 build/
 .externalNativeBuild/
 */.externalNativeBuild/*
+ios/Pods
